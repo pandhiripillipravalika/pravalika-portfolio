@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANDHIRIPILLI PRAVALIKA | Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#06080d',
+                        darkCard: '#0b0f19',
+                        cyanAccent: '#06b6d4',
+                        indigoAccent: '#6366f1'
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 15px rgba(6, 182, 212, 0.2)' },
+                            '100%': { boxShadow: '0 0 30px rgba(99, 102, 241, 0.5)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #06080d;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #a855f7 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #06080d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-slate-200 antialiased selection:bg-cyan-500 selection:text-white">
+
+    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#hero" class="text-xl sm:text-2xl font-extrabold tracking-wider gradient-text flex items-center gap-2">
+                <span class="p-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">PP</span>
+                <span>PRAVALIKA</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
+                <a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <a href="#certifications" class="hover:text-cyan-400 transition-colors">Certifications</a>
+                <a href="#achievements" class="hover:text-cyan-400 transition-colors">Achievements</a>
+                <a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="hidden md:flex items-center">
+                <a href="#contact" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-semibold text-white rounded-xl group bg-gradient-to-br from-cyan-500 to-indigo-600 group-hover:from-cyan-500 group-hover:to-indigo-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-cyan-800">
+                    <span class="relative px-4 py-2.5 transition-all ease-in duration-75 bg-slate-950 rounded-[10px] group-hover:bg-opacity-0">
+                        Get In Touch
+                    </span>
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-card border-t border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block py-2 text-slate-300 hover:text-cyan-400">About</a>
+            <a href="#skills" class="block py-2 text-slate-300 hover:text-cyan-400">Skills</a>
+            <a href="#projects" class="block py-2 text-slate-300 hover:text-cyan-400">Projects</a>
+            <a href="#certifications" class="block py-2 text-slate-300 hover:text-cyan-400">Certifications</a>
+            <a href="#achievements" class="block py-2 text-slate-300 hover:text-cyan-400">Achievements</a>
+            <a href="#contact" class="block py-2 text-slate-300 hover:text-cyan-400">Contact</a>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-20">
+
+        <section id="hero" class="min-h-[calc(100vh-80px)] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto text-center space-y-8">
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-cyan-500/30 text-xs sm:text-sm font-medium text-cyan-300 shadow-lg animate-float">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span>Seeking Software Developer & AI/ML Opportunities</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight">
+                    Hi, I'm <span class="gradient-text">PANDHIRIPILLI PRAVALIKA</span>
+                </h1>
+
+                <!-- Subtitle / Title -->
+                <p class="text-lg sm:text-2xl text-slate-300 font-semibold max-w-3xl mx-auto leading-relaxed">
+                    B.Tech Computer Science & Engineering Student <span class="text-cyan-400">|</span> AI/ML Enthusiast <span class="text-indigo-400">|</span> Software Developer
+                </p>
+
+                <!-- Brief Bio Summary -->
+                <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    Aspiring Software Developer passionate about building intelligent solutions, learning cutting-edge technologies, and crafting high-impact software applications.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <a href="#projects" class="px-7 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5">
+                        Explore My Projects
+                    </a>
+                    <a href="#contact" class="px-7 py-3.5 rounded-xl font-semibold text-slate-200 glass-card hover:bg-slate-800/80 hover:text-white border border-slate-700/80 transition-all duration-300 hover:-translate-y-0.5">
+                        Contact Me
+                    </a>
+                </div>
+
+                <!-- Social Media Icons Row with Explicit SVG -->
+                <div class="pt-8 flex items-center justify-center gap-6">
+                    <!-- LinkedIn -->
+                    <a href="https://linkedin.com/in/pravalika-pandhiri-pilli" target="_blank" rel="noopener noreferrer" class="group p-3.5 rounded-full glass-card hover:border-cyan-500/60 hover:bg-cyan-500/10 transition-all duration-300 hover:-translate-y-1" aria-label="LinkedIn Profile">
+                        <svg class="w-6 h-6 fill-slate-300 group-hover:fill-cyan-400 transition-colors" viewBox="0 0 24 24">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                        </svg>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="group p-3.5 rounded-full glass-card hover:border-indigo-500/60 hover:bg-indigo-500/10 transition-all duration-300 hover:-translate-y-1" aria-label="GitHub Profile">
+                        <svg class="w-6 h-6 fill-slate-300 group-hover:fill-indigo-400 transition-colors" viewBox="0 0 24 24">
+                            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                        </svg>
+                    </a>
+
+                    <!-- Email -->
+                    <a href="mailto:pandhiripillipravalika@gmail.com" class="group p-3.5 rounded-full glass-card hover:border-cyan-500/60 hover:bg-cyan-500/10 transition-all duration-300 hover:-translate-y-1" aria-label="Email Me">
+                        <svg class="w-6 h-6 fill-none stroke-slate-300 group-hover:stroke-cyan-400 stroke-2 transition-colors" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-900">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">About <span class="gradient-text">Me</span></h2>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Get to know my academic background, interests, and aspirations.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Academic Info Card -->
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-4 relative overflow-hidden group">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all"></div>
+                        <div class="inline-flex p-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Education & Background</h3>
+                        <p class="text-slate-300 leading-relaxed">
+                            I am currently pursuing my <span class="text-cyan-400 font-semibold">B.Tech in Computer Science and Engineering</span>. My academic journey has equipped me with a robust foundation in software engineering principles, algorithms, and full-stack development.
+                        </p>
+                    </div>
+
+                    <!-- Tech Focus Card -->
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-4 relative overflow-hidden group">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
+                        <div class="inline-flex p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Core Focus & Passion</h3>
+                        <p class="text-slate-300 leading-relaxed">
+                            My focus centers on <span class="text-indigo-400 font-semibold">Artificial Intelligence & Machine Learning</span> alongside scalable software creation. I enjoy converting complex computational problems into elegant, real-world practical applications.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4 Pillar Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-card rounded-xl p-5 text-center space-y-2 hover:-translate-y-1 transition-transform">
+                        <div class="text-cyan-400 text-2xl font-bold">🤖 AI / ML</div>
+                        <p class="text-xs text-slate-400">Generative AI & Models</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-5 text-center space-y-2 hover:-translate-y-1 transition-transform">
+                        <div class="text-indigo-400 text-2xl font-bold">💻 Software Dev</div>
+                        <p class="text-xs text-slate-400">Full Stack & Back-End</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-5 text-center space-y-2 hover:-translate-y-1 transition-transform">
+                        <div class="text-purple-400 text-2xl font-bold">🧠 Problem Solving</div>
+                        <p class="text-xs text-slate-400">Data Structures & Logic</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-5 text-center space-y-2 hover:-translate-y-1 transition-transform">
+                        <div class="text-emerald-400 text-2xl font-bold">⚡ Continuous Learning</div>
+                        <p class="text-xs text-slate-400">Certifications & Growth</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-900 bg-slate-950/40">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">Technical & Soft <span class="gradient-text">Skills</span></h2>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Technologies and interpersonal capabilities I leverage every day.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Technical Skills -->
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <span class="p-2 rounded-lg bg-cyan-500/20 text-cyan-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            </span>
+                            Programming Languages & Web
+                        </h3>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                                <span class="font-medium text-slate-200">Java</span>
+                                <span class="text-xs font-semibold px-2 py-1 rounded bg-cyan-500/20 text-cyan-300">Intermediate</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                                <span class="font-medium text-slate-200">Python</span>
+                                <span class="text-xs font-semibold px-2 py-1 rounded bg-cyan-500/20 text-cyan-300">Core</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                                <span class="font-medium text-slate-200">C Language</span>
+                                <span class="text-xs font-semibold px-2 py-1 rounded bg-slate-800 text-slate-400">Foundational</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                                <span class="font-medium text-slate-200">HTML5 / CSS3</span>
+                                <span class="text-xs font-semibold px-2 py-1 rounded bg-cyan-500/20 text-cyan-300">Fluent</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between col-span-2">
+                                <span class="font-medium text-slate-200">JavaScript</span>
+                                <span class="text-xs font-semibold px-2 py-1 rounded bg-cyan-500/20 text-cyan-300">Modern ES6+</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soft Skills -->
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <span class="p-2 rounded-lg bg-indigo-500/20 text-indigo-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            </span>
+                            Soft Skills & Professional Strengths
+                        </h3>
+
+                        <div class="space-y-3">
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-3">
+                                <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">💬</span>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-200">Effective Communication</div>
+                                    <div class="text-xs text-slate-400">Articulating technical ideas clearly to diverse teams</div>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-3">
+                                <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">🤝</span>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-200">Teamwork & Collaboration</div>
+                                    <div class="text-xs text-slate-400">Thriving in hackathons and cross-functional team projects</div>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-3">
+                                <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">🧩</span>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-200">Analytical Problem-Solving</div>
+                                    <div class="text-xs text-slate-400">Breaking down complex requirements into structured code</div>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-3">
+                                <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">⏰</span>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-200">Time Management</div>
+                                    <div class="text-xs text-slate-400">Meeting strict deadlines efficiently under fast-paced settings</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-900">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">Featured <span class="gradient-text">Projects</span></h2>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Innovations created with clean architecture and modern development tools.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1: SmartGen -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Web Application</span>
+                                <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white transition-colors">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                                </a>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">SmartGen</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                An intelligent smart shopping list generator designed to streamline grocery list planning, manage budgets, and offer intuitive product categorization.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">JavaScript</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">HTML5</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">CSS3</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Interactive Quick Sort Visualizer -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Algorithms</span>
+                                <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white transition-colors">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                                </a>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors">Quick Sort Visualizer</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                An interactive visualization application providing step-by-step animations of the Quick Sort algorithm, assisting students and devs in understanding divide-and-conquer logic.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">JavaScript</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Algorithms</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Data Structures</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: AI Chatbot -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Artificial Intelligence</span>
+                                <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white transition-colors">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                                </a>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">AI Chatbot</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                An automated conversational agent utilizing natural language principles to process query prompts, providing real-time helpful feedback to users.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Python</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">NLP</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Generative AI</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: IDEA-TO-APK Builder -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Mobile & DevTools</span>
+                                <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white transition-colors">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                                </a>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">IDEA-TO-APK Builder</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                A streamlined workflow concept converting creative application concepts into deployable Android Application Packages (APK).
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Android</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Java</span>
+                            <span class="text-xs px-2.5 py-1 rounded bg-slate-900 text-slate-300">Build Tools</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-900 bg-slate-950/40">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">Professional <span class="gradient-text">Certifications</span></h2>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Industry credentials validating continuous technical advancement.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Cert 1 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Oracle Cloud Infrastructure 2025 AI Foundations Associate</h3>
+                            <p class="text-sm text-cyan-400 font-medium mt-1">Oracle Cloud</p>
+                            <p class="text-xs text-slate-400 mt-2">Comprehensive foundation in OCI AI services, Machine Learning basics, and AI infrastructure setup.</p>
+                        </div>
+                    </div>
+
+                    <!-- Cert 2 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Java Developer - Intermediate</h3>
+                            <p class="text-sm text-indigo-400 font-medium mt-1">Infosys Springboard</p>
+                            <p class="text-xs text-slate-400 mt-2">Object-oriented programming, data structures, multithreading, and advanced Java application development.</p>
+                        </div>
+                    </div>
+
+                    <!-- Cert 3 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Generative AI: Prompt Engineering Basics</h3>
+                            <p class="text-sm text-purple-400 font-medium mt-1">Professional Certification</p>
+                            <p class="text-xs text-slate-400 mt-2">Techniques in effective prompt crafting, context management, and large language model optimization.</p>
+                        </div>
+                    </div>
+
+                    <!-- Cert 4 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Google Cloud Generative AI</h3>
+                            <p class="text-sm text-emerald-400 font-medium mt-1">Google Cloud</p>
+                            <p class="text-xs text-slate-400 mt-2">Exploration of foundational AI models, Vertex AI tools, and practical cloud AI deployments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-900">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">Honors & <span class="gradient-text">Achievements</span></h2>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Milestones achieved in hackathons and competitive settings.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 max-w-3xl mx-auto relative overflow-hidden border border-amber-500/20">
+                    <div class="absolute top-0 right-0 p-8 opacity-10">
+                        <svg class="w-32 h-32 fill-amber-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+                        <div class="p-4 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 text-3xl shrink-0">
+                            🏆
+                        </div>
+                        <div class="space-y-2">
+                            <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300">Hackathon Winner</div>
+                            <h3 class="text-2xl font-bold text-white">2nd Prize — DevJam 1.0 Hackathon</h3>
+                            <p class="text-cyan-400 text-sm font-medium">SRK Institute of Engineering and Technology</p>
+                            <p class="text-slate-300 text-sm leading-relaxed pt-1">
+                                Recognized for developing a high-impact software prototype within strict time constraints, demonstrating leadership, technical proficiency, and innovative solution design.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-900 bg-slate-950/60">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">Get In <span class="gradient-text">Touch</span></h2>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Feel free to reach out for collaborations, entry-level opportunities, or tech discussions.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <!-- Contact Cards -->
+                    <div class="space-y-4">
+                        <!-- Direct Email Card -->
+                        <a href="mailto:pandhiripillipravalika@gmail.com" class="glass-card rounded-2xl p-6 flex items-center gap-4 hover:border-cyan-500/50 transition-all duration-300 group block">
+                            <div class="p-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-110 transition-transform shrink-0">
+                                <svg class="w-6 h-6 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs text-slate-400 font-medium">Direct Email</p>
+                                <p class="text-sm sm:text-base font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors truncate">
+                                    pandhiripillipravalika@gmail.com
+                                </p>
+                            </div>
+                        </a>
+
+                        <!-- LinkedIn Card -->
+                        <a href="https://linkedin.com/in/pravalika-pandhiri-pilli" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 flex items-center gap-4 hover:border-cyan-500/50 transition-all duration-300 group block">
+                            <div class="p-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-110 transition-transform shrink-0">
+                                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs text-slate-400 font-medium">LinkedIn Network</p>
+                                <p class="text-sm sm:text-base font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors truncate">
+                                    pravalika-pandhiri-pilli
+                                </p>
+                            </div>
+                        </a>
+
+                        <!-- GitHub Card -->
+                        <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 flex items-center gap-4 hover:border-indigo-500/50 transition-all duration-300 group block">
+                            <div class="p-3.5 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 group-hover:scale-110 transition-transform shrink-0">
+                                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                    <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs text-slate-400 font-medium">GitHub Repositories</p>
+                                <p class="text-sm sm:text-base font-semibold text-slate-100 group-hover:text-indigo-400 transition-colors truncate">
+                                    pandhiripillipravalika
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-4">
+                        <h3 class="text-xl font-bold text-white">Send a Direct Message</h3>
+                        <form id="contactForm" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Your Name</label>
+                                <input type="text" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Your Email</label>
+                                <input type="email" required placeholder="john@example.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Message</label>
+                                <textarea rows="4" required placeholder="Hello Pravalika, I'd like to discuss an opportunity..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors text-sm resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300 shadow-lg shadow-cyan-500/25">
+                                Send Message
+                            </button>
+                        </form>
+                        <div id="formStatus" class="hidden p-3 rounded-xl text-center text-xs font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                            Thank you! Your message has been sent successfully.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-8 px-4 border-t border-slate-900 text-center space-y-4">
+            <div class="flex justify-center gap-6">
+                <!-- LinkedIn Footer -->
+                <a href="https://linkedin.com/in/pravalika-pandhiri-pilli" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="LinkedIn">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                </a>
+                <!-- GitHub Footer -->
+                <a href="https://github.com/pandhiripillipravalika" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-indigo-400 transition-colors" aria-label="GitHub">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                </a>
+                <!-- Email Footer -->
+                <a href="mailto:pandhiripillipravalika@gmail.com" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Email">
+                    <svg class="w-5 h-5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                </a>
+            </div>
+            <p class="text-xs text-slate-500">
+                &copy; <span id="year"></span> PANDHIRIPILLI PRAVALIKA. All rights reserved.
+            </p>
+        </footer>
+    </main>
+
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Contact Form Interactive Submit
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formStatus.classList.remove('hidden');
+            contactForm.reset();
+            setTimeout(() => {
+                formStatus.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Interactive Particle Canvas Background
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 45;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.color = Math.random() > 0.5 ? 'rgba(6, 182, 212, ' : 'rgba(99, 102, 241, ';
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw line connections between close particles
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 - dist / 800})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach((p) => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.onload = function() {
+            initParticles();
+            animateParticles();
+        };
+    </script>
+</body>
+</html>
