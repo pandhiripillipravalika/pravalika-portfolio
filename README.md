@@ -25,7 +25,7 @@ PANDHIRIPILLI PRAVALIKA
 
 🚀 My Portfolio
 
-👉 [Visit My Portfolio Website](https://pandhiripilliprav alika.github.io/pravalika-portfolio/)
+👉 [Visit My Portfolio Website](https://pandhiripillipravalika.github.io/pravalika-portfolio/)
 
 🔗 Connect With Me
 
