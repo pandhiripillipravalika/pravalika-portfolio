@@ -1,28 +1,37 @@
-# pravalika-portfolio
-PANDHIRIPILLI PRAVALIKA — Portfolio
+PANDHIRIPILLI PRAVALIKA
 
-Welcome to my personal portfolio!
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=PANDHIRIPILLI%20PRAVALIKA&fontSize=35&fontColor=ffffff&animation=fadeIn&fontAlignY=38" width="100%" alt="Pravalika Portfolio Banner"/>
+</p><h1 align="center">Hi 👋, I'm Pravalika</h1><h3 align="center">Aspiring Software Engineer | AI/ML Enthusiast | Web Developer</h3><p align="center">
+  🎓 B.Tech Computer Science and Engineering  
+  <br/>
+  💻 Passionate about coding, technology, and building creative projects  
+  <br/>
+  🚀 Learning new technologies and improving my skills every day
+</p>---
 
-I am a B.Tech Computer Science and Engineering student passionate about software development, Artificial Intelligence, and Machine Learning.
+👩‍💻 About Me
 
-About Me
+- 🎓 CSE student at Dhanekula Institute of Engineering and Technology
+- 🤖 Interested in Artificial Intelligence and Machine Learning
+- 🌐 Learning web development and software engineering
+- 🏆 Second prize winner at the SRK College Hackathon with the I2K project
 
-- Aspiring Software Engineer
-- AI/ML Enthusiast
-- Interested in Web Development and Problem Solving
+🛠️ Technical Skills
 
-Technical Skills
+- Languages: C, Python, Java
+- Web: HTML, CSS, JavaScript
+- Interests: AI/ML, UI/UX, Interactive Web Development
 
-- HTML, CSS, JavaScript
-- Python
-- C Programming
-- Java
+🚀 My Portfolio
 
-Portfolio Website
+👉 [Visit My Portfolio Website](https://pandhiripilliprav alika.github.io/pravalika-portfolio/)
 
-[Click here to visit my portfolio](https://pandhiripillipravalika.github.io/pravalika-portfolio/)
+🔗 Connect With Me
 
-Connect With Me
+- [GitHub Profile](https://github.com/pandhiripilliprav alika)
+- "LinkedIn Profile" (https://linkedin.com/in/pravalika-pandhiri-pilli)
 
-- "GitHub" (https://github.com/pandhiripillipravalika)
-- "LinkedIn" (https://linkedin.com/in/pravalika-pandhiri-pilli)
+---
+
+<p align="center">✨ Thank you for visiting my profile! ✨</p>
